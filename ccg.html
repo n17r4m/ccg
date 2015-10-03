@@ -1,14 +1,131 @@
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>ccg</title>
+  
+  
 </head>
 
-<body>
-  <h1>Welcome to Meteor!</h1>
+<body></body>
 
-  {{> loginButtons}}
-</body>
+<template name="main">
+  <header>{{> top}}</header>
+  <div id="wrap">{{> yield}}</div>
+  <footer>{{> bottom}}</footer>
+</template>
+
+<template name="top">
+    <div style="float: right;">
+      <a href="/">Home</a>
+    </div>
+    {{> loginButtons}}  
+    
+</template>
+
+<template name="bottom">
+  <p>Constructed for the 2015 VGAD GameJam</p>
+  <p>Designed by A, M, N, D, & F</p>
+</template>
+
+<template name="loading">
+  Loading...
+</template>
 
 <template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+  <h1>Collectable Card Game</h1>
+  
+  {{#if currentUser}}
+    {{> matchmaking}}
+  {{else}}
+    <p>Please Sign in</p>
+  {{/if}}
+  
 </template>
+
+<template name="matchmaking">
+  
+  <p><a href="/new">New game</a></p>
+  
+  <table border="1" width="100%">
+    {{#each openGame}}
+      <tr>
+        <td>{{started}}</td>
+        <td>
+          {{#if myGame}}
+            <a href="/play/{{_id}}">Resume</a>
+          {{else}}
+            <a href="/play/{{_id}}">Join</a>
+          {{/if}}
+        </td>
+      </tr>
+    {{/each}}
+    {{#each inGame}}
+      <tr>
+        <td>{{started}}</td>
+        <td>
+          {{#if myGame}}
+            <a href="/play/{{_id}}">Resume</a>
+          {{else}}
+            <a href="/spectate/{{_id}}">Watch</a>
+          {{/if}}
+        </td>
+      </tr>
+    {{/each}}
+  </table>
+  
+</template>
+
+<template name="play">
+  <label>Opponents Cards</label>
+  <div class="cardarea">
+    {{#each players}}{{#unless isMe}}
+      {{#each cards}}
+        {{> card}}
+      {{/each}}
+    {{/unless}}{{/each}}
+  </div>
+  <label>Arena</label>
+  <div class="cardarea">
+    {{#each players}}
+      {{#if isMe}}{{#each active}}
+        {{> card}}
+      {{/each}}{{/if}}
+      {{> player}}
+      {{#unless isMe}}{{#each active}}
+        {{> card}}
+      {{/each}}{{/unless}}
+    {{/each}}
+  </div>
+  <label>Your Cards</label>
+  <div class="cardarea">
+    {{#each players}}{{#if isMe}}
+      {{#each cards}}
+        {{> card}}
+      {{/each}}
+    {{/if}}{{/each}}
+  </div>
+</template>
+
+
+<template name="spectate">
+  
+</template>
+
+<template name="player">
+  <div class="player">
+    <br>{{deck.length}}
+  </div>
+</template>
+
+<template name="card">
+  <div class="card">
+    {{#if show}}
+      <label>{{name}}</label>
+      <hr>
+      <p>{{description}}</p>
+    {{/if}}
+  </div>
+</template>
+
+

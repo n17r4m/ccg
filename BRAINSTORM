@@ -1,3 +1,18 @@
 
+Important/Useful links:
 
-Hello!
+    Live site:   ccg.mygen.ca
+    Meteor docs: http://docs.meteor.com/#/full/
+    Router docs: http://iron-meteor.github.io/iron-router
+    Mongo docs:  http://docs.mongodb.org/manual/crud/
+
+- User signup is done. No email verification required.    
+
+- 10 second prototype/mockup of play arena.
+
+- Very basic matchmaking is in, so focus can be made on making a sweet game.
+
+
+
+We need to have cats in the system, LOTS AND LOTS OF CATS!
+MEOW

@@ -5,6 +5,7 @@ Important/Useful links:
     Meteor docs: http://docs.meteor.com/#/full/
     Router docs: http://iron-meteor.github.io/iron-router
     Mongo docs:  http://docs.mongodb.org/manual/crud/
+    Github:      https://github.com/n17r4m/ccg
 
 - User signup is done. No email verification required.    
 
@@ -12,7 +13,10 @@ Important/Useful links:
 
 - Very basic matchmaking is in, so focus can be made on making a sweet game.
 
-
+Ideas?
+    Really good (random) idea:
+        When [contact] sends a text message, trigger wake-up alarm.
+        
 
 We need to have cats in the system, LOTS AND LOTS OF CATS!
 MEOW

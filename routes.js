@@ -43,7 +43,7 @@ Router.route("/play/:_id", {
 	}
 })
 
-Router.route('spectate/:_id', {
+Router.route('/spectate/:_id', {
 	waitOn: function(){ return [_Games] },
 	action: function(){
 		var id = this.params._id;

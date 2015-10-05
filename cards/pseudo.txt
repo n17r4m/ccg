@@ -1,0 +1,222 @@
+
+
+methods:
+    startNewGame: ->
+    
+        players.each ->
+            cards = Cards.random(25)
+            draw = cards.pop(4)
+            
+        turn += Math.floor(Math.random() * 2)
+        
+    draw: ->
+        
+            draw = deck.pop(1)
+            
+    turn: ->
+        draw!
+        play!
+        discard!
+    
+    play: ->
+        click .card: ->
+            // how choose target? drag-drop?
+            
+    
+    discard: ->
+        if cards.length > 5
+            click .card: ->
+                card.discard!
+        
+
+
+Gameplay basics:
+SETUP
+    Both players have a deck of size (N=25)*
+    Beginning of game:
+        1- Both players draw 4 cards
+        2- Determine first player
+        3- First player begins their turn
+    
+    A Turn consists of 3 Phases:
+        DRAW:       Player draws (D=1) cards from the top of their deck, 
+                    into their Hand.
+        PLAY:       Player plays (P=1) card (if able). Played cards go to the
+                    Waste.
+        DISCARD:    Player discards down to (H=5) cards in hand. Discarded cards
+                    go to the Waste.
+    
+    A card may be in one of 3 places:
+        DECK:       The player's combined health pool and card source.
+                    + Ordered
+                    + Randomly initialized from 'the' collective card pool
+        HAND:       The player's available cards. 
+                    + Unordered set
+        WASTE:      The player's discard pile. 
+                    + Ordered
+        
+    A player may be afflicted by 'Blindness':
+        Affected player places their Hand facedown for the duration of the 
+        effect, playing and drawing cards without reading their text.
+        /!\ --- Should we say 'play cards by random selection' or let players 
+        play by memory?
+    
+    During the PLAY Phase, players may play exactly one card, either a mutation
+    or a variant card. (I don't think it need be stated that there are no
+    interrupts; no counterspells, etc. A turn is a turn.)
+    
+    * using variables to test stuff
+
+Two types of cards:
+
+    Mutations   
+        Cards that have an effect only when played.
+
+    Variants    
+        When played, stay on the field until replaced by another Variant. 
+        There can only be one active at a time!
+        
+Card list:
+
+    MUTATION NAME & COUNT   EFFECT
+    
+    Antennae                Target player draws a card.
+    5                    
+                            + TARGETS: PLAYER
+                                Target player draws a card
+    
+    
+    Tentacle Eyes           Target player is Blinded for 1 turn.
+    3                       
+                            + TARGETS: PLAYER
+                                Target player's Hand is turned facedown
+                                Target player shuffles their Hand
+    
+    
+    Gelatinous Fist         Reveal the top card of any deck.
+    3                       You may play have this card played against BOTH 
+                            players.
+
+                            + TARGETS: PLAYER
+                                Target player reveals top card of Deck
+                                You may play this card with impunity
+                                If the card targets a player:
+                                    Play this card targeting yourself
+                                    Play this card targeting opponent 
+                                If the card targets a card:
+                                    Play this card targetting one of your cards
+                                    Opponent plays this card targetting one of 
+                                    their cards
+                            
+                            
+    Brain Worm              Player discards 2 cards.
+    3
+                            + TARGETS: PLAYER
+                                Target player chooses 2 cards and puts them 
+                                into their Waste
+                                
+    
+    Third Hemisphere        Choose a card.
+    3                       Play this card 2 times.
+                        
+                            + TARGETS: CARD
+                                If the TARGET CARD targets a player:
+                                    Play this card targeting a player
+                                    Play this card targeting SAME player
+                                If the TARGET CARD targets a card:
+                                    Play this card targeting a card
+                                    Play this card targeting SAME card
+    
+    
+    Autotomy                Choose one or more: {DRAW, PLAY, DISCARD};
+    3                       Target player skips the chosen phases next turn.
+                            
+                            + TARGETS: PLAYER
+                                Target player's next turn does not include 
+                                the chosen phases
+                            
+                            
+    Cantripping Balls       Draw 2 cards.
+    3                       Play 2 cards.
+                            
+                            + TARGETS: PLAYER (SELF)
+                                You draw 2 cards
+                                You play 2 cards
+    
+    
+    Recombobulate           Target player shuffles their hand into their deck,
+    3                       then draws 3 cards.
+                            
+                            + TARGETS: PLAYER
+                                Target player puts Hand into Deck
+                                Target player randomly reorders Deck
+                            
+                            
+    De-necrotize            You draw 2 cards from your Waste.
+    3                       Skip your discard Phase.
+                            
+                            + TARGETS: PLAYER (SELF)
+                                You draw two cards
+                                This turn does not include a Discard phase
+                            
+                            
+    Phantom Limb            You may play 1 cards from your Waste.
+    3                       
+                            + TARGETS: CARD (in WASTE)
+                                Target a card in your Waste
+                                You play target card
+    
+    The Fat                 This card cannot be played.
+    3                       You may only play this card if Blinded.
+                            
+                            + TARGETS: NOTHING
+                                No Action
+                                If you become blinded, you may play this card
+                            
+    Turd Eye                Target player draws 1,
+    3                       then discards 2.
+                            
+                            + TARGETS: PLAYER
+                                Player draws a card
+                                Player discards 2 cards
+                            
+    Third Leg Up            Next turn, you may play 2 additional cards.
+    2                       
+                            + TARGETS: PLAYER (SELF)
+                                On your next turn, you may play up to 3 cards
+    
+    Secondary Palpator      Discard down to 2 cards in Hand.
+    2                       Play 2 cards.
+                            
+                            + TARGETS: PLAYER (SELF)
+                                While Hand size > 2
+                                    You discard a card
+                                You play 2 cards
+    
+    Bile Duct Phylactery    This card may only be played if all players have 
+    1                       minimum Waste size of 5. Both players swap their 
+                            Decks with their Wastes and shuffle both; this card 
+                            is removed from the game.
+                            
+                            + TARGETS: PLAYER (BOTH)
+                                If each Waste is larger than 5
+                                Each player:
+                                    Places their Deck into the Phylactery
+                                    Places their Waste into their Deck 
+                                    Places the Phylactery into their Waste 
+                                    Shuffles their Deck 
+                                This card is removed from the game
+    
+    VARIANT NAME            EFFECT
+    Extra Joints            Players each draw 3 cards on their draw phase
+    Crowded hands           Players have maximum hand size 3
+    Secrete-recy            Players play with top card of deck revealed
+    Salad Fingers           Players may not target themselves
+    Hot Parasite            Players each exchange 1 card after draw step
+                            
+        
+        
+
+        
+        
+        

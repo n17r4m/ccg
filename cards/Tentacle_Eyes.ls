@@ -1,3 +1,4 @@
 @Tentacle_Eyes = class Tentacle_Eyes
-    @action = ->
+    ->  @turns = 1
+    action: ->
         player.cards.each (card) -> card.facedown!

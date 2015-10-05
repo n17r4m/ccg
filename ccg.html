@@ -1,12 +1,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>ccg</title>
-  
-  
 </head>
-
 <body></body>
 
 <template name="main">
@@ -20,7 +16,6 @@
       <a href="/">Home</a>
     </div>
     {{> loginButtons}}  
-    
 </template>
 
 <template name="bottom">
@@ -34,19 +29,15 @@
 
 <template name="hello">
   <h1>Collectable Card Game</h1>
-  
   {{#if currentUser}}
     {{> matchmaking}}
   {{else}}
     <p>Please Sign in</p>
   {{/if}}
-  
 </template>
 
 <template name="matchmaking">
-  
   <p><a href="/new">New game</a></p>
-  
   <table border="1" width="100%">
     {{#each openGame}}
       <tr>
@@ -73,7 +64,6 @@
       </tr>
     {{/each}}
   </table>
-  
 </template>
 
 <template name="play">
@@ -109,7 +99,6 @@
 
 
 <template name="spectate">
-  
 </template>
 
 <template name="player">

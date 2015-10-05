@@ -16,7 +16,7 @@ Player = function(id){
     
     this.deck.forEach(function(card){
         this.owner = this.id;
-    })
+    });
     
     for (var i = 0; i < 5; i++){
         this.cards.push(this.deck.pop());

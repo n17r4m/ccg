@@ -87,7 +87,7 @@ Cards = new (function(){
 
 // Utility functions
 function clone(card){
-    return $.extend(true, {}, card); 
+    return $.extend(true, {}, card);
 }
 
 function nameToImgFile(name){
